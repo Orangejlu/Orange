@@ -1,0 +1,24 @@
+/*wrap,footer*/
+*{
+    margin: 0;
+    padding: 0;
+}
+html, body{
+    height: 100%;
+}
+.wrap{
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -90px;
+}
+.end{
+    clear:both;
+    height: 70px;
+}
+#copyright {
+    background-color: gray;
+    text-align: center;
+    height: 70px;
+    padding-top: 20px;
+}
