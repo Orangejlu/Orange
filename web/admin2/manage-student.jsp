@@ -20,10 +20,10 @@
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="heading1">
             <h4 class="panel-title">
-                <span class="collapsed" aria-expanded="false" role="button"
-                     data-toggle="collapse" data-parent="#accordion"
-                     data-target="#collapse1"
-                     aria-expanded="true" aria-controls="collapse1">
+                <span class="collapsed block" aria-expanded="false" role="button"
+                      data-toggle="collapse" data-parent="#accordion"
+                      data-target="#collapse1"
+                      aria-expanded="true" aria-controls="collapse1">
                     从文件批量添加学生
                 </span>
             </h4>
@@ -31,16 +31,16 @@
         <div id="collapse1" class="panel-collapse collapse"
              role="tabpanel" aria-labelledby="heading1">
             <div class="panel-body">
-                <form action="">
-                    从csv文件上传，格式应如下所示(密码默认与教学号一致)：<a href="">下载示例文件</a>
+                <form action="<%=basePath%>admin2/studentFileUpload.do" id="stu-file-upload-form"
+                      role="form" method="post" enctype="multipart/form-data">
+                    从csv文件上传，格式应如下所示(密码默认与教学号一致)：<a href="<%=basePath%>admin2/student-sample.csv">下载示例文件</a>
 <pre>教学号,学号,姓名,性别,年级
 54131000,55131000,张三,男,2013</pre>
                     <div class="input-group">
                         <label for="stu-file" class="input-group-addon">选择文件</label>
                         <input id="stu-file" name="stu-file" type="file" class="form-control" accept=".csv">
-                        <a href="javascript:void(0);" class="btn btn-primary input-group-addon"
-                           data-toggle="modal"
-                           data-target="#stu-file-dlg">上传</a>
+                        <a class="btn btn-primary input-group-addon"
+                           data-toggle="modal" data-target="#stu-file-dlg">上传</a>
                     </div>
                 </form>
             </div><!--.panel-body-->
@@ -58,7 +58,9 @@
                         </h3>
                     </div>
                     <div class="modal-body">
-
+                        <div id="stu-modal-body-content"></div>
+                        <div id="stu-modal-body-msg"></div>
+                        <table></table>
                     </div><!--.modal-body-->
                     <div class="modal-footer">
                         <button type="button" class="btn" data-dismiss="modal">关闭</button>
@@ -71,12 +73,12 @@
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="heading2">
             <h4 class="panel-title">
-                <div class="collapsed" aria-expanded="false" role="button"
-                     data-toggle="collapse" data-parent="#accordion"
-                     data-target="#collapse2"
-                     aria-expanded="true" aria-controls="collapse2">
+                <span class="block collapsed" aria-expanded="false" role="button"
+                      data-toggle="collapse" data-parent="#accordion"
+                      data-target="#collapse2"
+                      aria-expanded="true" aria-controls="collapse2">
                     学院学生一览
-                </div>
+                </span>
             </h4>
         </div><!--.panel-heading-->
         <div id="collapse2" class="panel-collapse collapse in"
@@ -106,21 +108,23 @@
                         }
                     </script>
                     <table class="table table-striped table-hover" id="stu-table">
-                        <thead>
-                        <th><label class="checkbox-label">
-                            <input type="checkbox" class="select-all" onchange="selectAll()">
-                            <span class="sr-only">全选</span></label>
-                            <input type="hidden" id="flag" value="0">
-                        </th>
-                        <th>#</th>
-                        <th>教学号</th>
-                        <th>学号</th>
-                        <th>姓名</th>
-                        <th>性别</th>
-                        <th>年级</th>
-                        <th>编辑</th>
-                        </thead>
                         <form action="admin2/stu.do" id="all-stu" role="form">
+                            <thead>
+                            <tr>
+                                <th><label class="checkbox-label">
+                                    <input type="checkbox" class="select-all" onchange="selectAll()">
+                                    <span class="sr-only">全选</span></label>
+                                    <input type="hidden" id="flag" value="0">
+                                </th>
+                                <th>#</th>
+                                <th>教学号</th>
+                                <th>学号</th>
+                                <th>姓名</th>
+                                <th>性别</th>
+                                <th>年级</th>
+                                <th>编辑</th>
+                            </tr>
+                            </thead>
                             <tbody>
                             <sql:setDataSource var="sql" driver="oracle.jdbc.driver.OracleDriver"
                                                url="jdbc:oracle:thin:@127.0.0.1:1521:orcl"
@@ -210,10 +214,10 @@
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="heading3">
             <h4 class="panel-title">
-                <span class="collapsed" aria-expanded="false" role="button"
-                     data-toggle="collapse" data-parent="#accordion"
-                     data-target="#collapse3"
-                     aria-expanded="true" aria-controls="collapse3">
+                <span class="block collapsed" aria-expanded="false" role="button"
+                      data-toggle="collapse" data-parent="#accordion"
+                      data-target="#collapse3"
+                      aria-expanded="true" aria-controls="collapse3">
                     添加单个学生
                 </span>
             </h4>

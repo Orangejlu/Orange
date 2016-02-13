@@ -54,6 +54,7 @@
         background-color: #ccc;
     }
     .container{width: 100%;}
+    span.block{display: block;}
 </style>
 </head>
 <body>

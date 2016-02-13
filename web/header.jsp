@@ -33,8 +33,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <base href="<%=basePath%>">
+    <link rel="icon" href="favicon.ico">
     <!--link rel="stylesheet" href="css/style.css" /-->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script src="js/jquery-2.1.4.min.js"></script>

@@ -77,7 +77,7 @@ public class LoginCheckServlet extends HttpServlet {
                             return;
                         }
                     }//while
-                } catch (SQLException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     //session.setAttribute("msg", "数据库出错");
                     //response.sendRedirect(referer);

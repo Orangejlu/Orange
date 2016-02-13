@@ -34,7 +34,7 @@
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingOne">
             <h4 class="panel-title">
-                <span class="collapsed" aria-expanded="false" role="button"
+                <span class="collapsed block" aria-expanded="false" role="button"
                      data-toggle="collapse" data-parent="#accordion"
                      data-target="#collapseOne"
                      aria-expanded="true" aria-controls="collapseOne">
@@ -96,13 +96,13 @@
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingTWO">
             <h4 class="panel-title">
-                <div role="button" data-toggle="collapse" data-parent="#accordion"
+                <span class="block" role="button" data-toggle="collapse" data-parent="#accordion"
                      data-target="#collapseTWO"
                      aria-expanded="true" aria-controls="collapseTWO">
                     <mark><%=d_name%>
                     </mark>
                     教师一览
-                </div>
+                </span>
             </h4>
         </div><!--.panel-heading-->
         <div id="collapseTWO" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTWO">
@@ -186,6 +186,45 @@
         </div><!--.pabel-collapse-->
     </div><!--.panel-->
 
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="heading3">
+            <h4 class="panel-title">
+                <span class="block collapsed" aria-expanded="false" role="button"
+                     data-toggle="collapse" data-parent="#accordion"
+                     data-target="#collapse3"
+                     aria-expanded="true" aria-controls="collapse3">
+                    添加单个教师
+                </span>
+            </h4>
+        </div><!--.panel-heading-->
+        <div id="collapse3" class="panel-collapse collapse"
+             role="tabpanel" aria-labelledby="heading3">
+            <div class="panel-body">
+                <form action="<%=basePath%>admin2/addteacher.do" role="form" id="add-one-teacher-form">
+                    <div class="input-group">
+                        <label for="addid" class="input-group-addon">编号</label>
+                        <input type="text" class="form-control" id="addid" name="addid" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="addname" class="input-group-addon">姓名</label>
+                        <input type="text" class="form-control" id="addname" name="addname" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="addlevel" class="input-group-addon">职称</label>
+                        <input type="text" id="addlevel" name="addlevel" class="form-control">
+                    </div>
+                    <div class="input-group">
+                        <label for="addemail" class="input-group-addon">邮箱</label>
+                        <input type="email" id="addemail" class="form-control" name="addemail">
+                    </div>
+                    <input type="hidden" name="d_name" value="<%=d_name%>">
+                    <p class="text-info help-block" id="add-one-teacher-result"></p>
+                    <button class="btn btn-primary btn-block" id="add-one-teacher-submit">提交</button>
+                </form>
+            </div><!--.panel-body-->
+        </div><!--.pabel-collapse-->
+    </div><!--.panel-->
+
     <!--提示框-->
     <div class="modal fade" id="alert" tabindex="-1" role="dialog"
          aria-labelledby="notice-title">
@@ -249,49 +288,8 @@
             </div><!--.modal-content-->
         </div><!--.modal-dialog-->
     </div><!--.modal-->
-
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="heading3">
-            <h4 class="panel-title">
-                <div class="collapsed" aria-expanded="false" role="button"
-                     data-toggle="collapse" data-parent="#accordion"
-                     data-target="#collapse3"
-                     aria-expanded="true" aria-controls="collapse3">
-                    添加单个教师
-                </div>
-            </h4>
-        </div><!--.panel-heading-->
-        <div id="collapse3" class="panel-collapse collapse"
-             role="tabpanel" aria-labelledby="heading3">
-            <div class="panel-body">
-                <form action="<%=basePath%>admin2/addteacher.do" role="form" id="add-one-teacher-form">
-                    <div class="input-group">
-                        <label for="addid" class="input-group-addon">编号</label>
-                        <input type="text" class="form-control" id="addid" name="addid" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="addname" class="input-group-addon">姓名</label>
-                        <input type="text" class="form-control" id="addname" name="addname" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="addlevel" class="input-group-addon">职称</label>
-                        <input type="text" id="addlevel" name="addlevel" class="form-control">
-                    </div>
-                    <div class="input-group">
-                        <label for="addemail" class="input-group-addon">邮箱</label>
-                        <input type="email" id="addemail" class="form-control" name="addemail">
-                    </div>
-                    <input type="hidden" name="d_name" value="<%=d_name%>">
-                    <p class="text-info help-block" id="add-one-teacher-result"></p>
-                    <button class="btn btn-primary btn-block" id="add-one-teacher-submit">提交</button>
-                </form>
-            </div><!--.panel-body-->
-        </div><!--.pabel-collapse-->
-    </div><!--.panel-->
-
 </div>
 <!--.panel-group-->
-
 
 <%--结束container，页面下半部分--%>
 <%@ include file="../WEB-INF/content/admin2/bottom.jsp" %>

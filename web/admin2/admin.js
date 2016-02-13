@@ -1,5 +1,4 @@
 /*https://github.com/placemarker/jQuery-MD5/blob/master/jquery.md5.js*/(function(f){function n(t,w){var v=(t&65535)+(w&65535),u=(t>>16)+(w>>16)+(v>>16);return(u<<16)|(v&65535)}function r(t,u){return(t<<u)|(t>>>(32-u))}function c(A,w,v,u,z,y){return n(r(n(n(w,A),n(u,y)),z),v)}function b(w,v,B,A,u,z,y){return c((v&B)|((~v)&A),w,v,u,z,y)}function h(w,v,B,A,u,z,y){return c((v&A)|(B&(~A)),w,v,u,z,y)}function m(w,v,B,A,u,z,y){return c(v^B^A,w,v,u,z,y)}function a(w,v,B,A,u,z,y){return c(B^(v|(~A)),w,v,u,z,y)}function d(E,z){E[z>>5]|=128<<((z)%32);E[(((z+64)>>>9)<<4)+14]=z;var v,y,w,u,t,D=1732584193,C=-271733879,B=-1732584194,A=271733878;for(v=0;v<E.length;v+=16){y=D;w=C;u=B;t=A;D=b(D,C,B,A,E[v],7,-680876936);A=b(A,D,C,B,E[v+1],12,-389564586);B=b(B,A,D,C,E[v+2],17,606105819);C=b(C,B,A,D,E[v+3],22,-1044525330);D=b(D,C,B,A,E[v+4],7,-176418897);A=b(A,D,C,B,E[v+5],12,1200080426);B=b(B,A,D,C,E[v+6],17,-1473231341);C=b(C,B,A,D,E[v+7],22,-45705983);D=b(D,C,B,A,E[v+8],7,1770035416);A=b(A,D,C,B,E[v+9],12,-1958414417);B=b(B,A,D,C,E[v+10],17,-42063);C=b(C,B,A,D,E[v+11],22,-1990404162);D=b(D,C,B,A,E[v+12],7,1804603682);A=b(A,D,C,B,E[v+13],12,-40341101);B=b(B,A,D,C,E[v+14],17,-1502002290);C=b(C,B,A,D,E[v+15],22,1236535329);D=h(D,C,B,A,E[v+1],5,-165796510);A=h(A,D,C,B,E[v+6],9,-1069501632);B=h(B,A,D,C,E[v+11],14,643717713);C=h(C,B,A,D,E[v],20,-373897302);D=h(D,C,B,A,E[v+5],5,-701558691);A=h(A,D,C,B,E[v+10],9,38016083);B=h(B,A,D,C,E[v+15],14,-660478335);C=h(C,B,A,D,E[v+4],20,-405537848);D=h(D,C,B,A,E[v+9],5,568446438);A=h(A,D,C,B,E[v+14],9,-1019803690);B=h(B,A,D,C,E[v+3],14,-187363961);C=h(C,B,A,D,E[v+8],20,1163531501);D=h(D,C,B,A,E[v+13],5,-1444681467);A=h(A,D,C,B,E[v+2],9,-51403784);B=h(B,A,D,C,E[v+7],14,1735328473);C=h(C,B,A,D,E[v+12],20,-1926607734);D=m(D,C,B,A,E[v+5],4,-378558);A=m(A,D,C,B,E[v+8],11,-2022574463);B=m(B,A,D,C,E[v+11],16,1839030562);C=m(C,B,A,D,E[v+14],23,-35309556);D=m(D,C,B,A,E[v+1],4,-1530992060);A=m(A,D,C,B,E[v+4],11,1272893353);B=m(B,A,D,C,E[v+7],16,-155497632);C=m(C,B,A,D,E[v+10],23,-1094730640);D=m(D,C,B,A,E[v+13],4,681279174);A=m(A,D,C,B,E[v],11,-358537222);B=m(B,A,D,C,E[v+3],16,-722521979);C=m(C,B,A,D,E[v+6],23,76029189);D=m(D,C,B,A,E[v+9],4,-640364487);A=m(A,D,C,B,E[v+12],11,-421815835);B=m(B,A,D,C,E[v+15],16,530742520);C=m(C,B,A,D,E[v+2],23,-995338651);D=a(D,C,B,A,E[v],6,-198630844);A=a(A,D,C,B,E[v+7],10,1126891415);B=a(B,A,D,C,E[v+14],15,-1416354905);C=a(C,B,A,D,E[v+5],21,-57434055);D=a(D,C,B,A,E[v+12],6,1700485571);A=a(A,D,C,B,E[v+3],10,-1894986606);B=a(B,A,D,C,E[v+10],15,-1051523);C=a(C,B,A,D,E[v+1],21,-2054922799);D=a(D,C,B,A,E[v+8],6,1873313359);A=a(A,D,C,B,E[v+15],10,-30611744);B=a(B,A,D,C,E[v+6],15,-1560198380);C=a(C,B,A,D,E[v+13],21,1309151649);D=a(D,C,B,A,E[v+4],6,-145523070);A=a(A,D,C,B,E[v+11],10,-1120210379);B=a(B,A,D,C,E[v+2],15,718787259);C=a(C,B,A,D,E[v+9],21,-343485551);D=n(D,y);C=n(C,w);B=n(B,u);A=n(A,t)}return[D,C,B,A]}function o(u){var v,t="";for(v=0;v<u.length*32;v+=8){t+=String.fromCharCode((u[v>>5]>>>(v%32))&255)}return t}function i(u){var v,t=[];t[(u.length>>2)-1]=undefined;for(v=0;v<t.length;v+=1){t[v]=0}for(v=0;v<u.length*8;v+=8){t[v>>5]|=(u.charCodeAt(v/8)&255)<<(v%32)}return t}function j(t){return o(d(i(t),t.length*8))}function e(v,y){var u,x=i(v),t=[],w=[],z;t[15]=w[15]=undefined;if(x.length>16){x=d(x,v.length*8)}for(u=0;u<16;u+=1){t[u]=x[u]^909522486;w[u]=x[u]^1549556828}z=d(t.concat(i(y)),512+y.length*8);return o(d(w.concat(z),512+128))}function s(v){var y="0123456789abcdef",u="",t,w;for(w=0;w<v.length;w+=1){t=v.charCodeAt(w);u+=y.charAt((t>>>4)&15)+y.charAt(t&15)}return u}function l(t){return unescape(encodeURIComponent(t))}function p(t){return j(l(t))}function k(t){return s(p(t))}function g(t,u){return e(l(t),l(u))}function q(t,u){return s(g(t,u))}f.md5=function(u,v,t){if(!v){if(!t){return k(u)}else{return p(u)}}if(!t){return q(v,u)}else{return g(v,u)}}}(typeof jQuery==="function"?jQuery:this));
-
 jQuery(document).ready(function ($) {
     if (typeof (addmyclass) == "function") {
         addmyclass();
@@ -140,6 +139,63 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    //上传学生名单
+    $('#stu-file-dlg').on('shown.bs.modal', function (e) {
+        var form = $('#stu-file-upload-form');
+        var formData = new FormData($('#stu-file-upload-form')[0]);
+        //console.log(form.attr('action'));
+        $.ajax({
+            url: form.attr('action'),
+            data: formData,
+            type: 'POST',
+            contentType: false,//这句不可少,否则上传的contentType还是urlencoded而不是multipart/form-data
+            processData: false,//这句不可少，否则报错Uncaught TypeError: Illegal invocation
+            /*
+             contentType
+             类型：String
+             默认值: "application/x-www-form-urlencoded"。发送信息至服务器时内容编码类型。
+             默认值适合大多数情况。如果你明确地传递了一个 content-type 给 $.ajax()
+             那么它必定会发送给服务器（即使没有数据要发送）。
+
+             processData
+             类型：Boolean
+             默认值: true。
+             默认情况下，通过data选项传递进来的数据，如果是一个对象(技术上讲只要不是字符串)，
+             都会处理转化成一个查询字符串，以配合默认内容类型 "application/x-www-form-urlencoded"。
+             如果要发送 DOM 树信息或其它不希望转换的信息，请设置为 false。
+
+             http://www.w3school.com.cn/jquery/ajax_ajax.asp
+             */
+            beforeSend: function () {
+                $('#stu-modal-body-content').html('正在上传，请稍后……');
+                $('#stu-file-loading').show();
+            },
+            complete:function(){
+                $('#stu-file-loading').hide();
+            },
+            success: function (r) {
+                if (r.ok=="true"){
+                    var result = "<table class=\"table table-striped table-hover\"><thread><tr><th>教学号</th><th>学号</th><th>姓名</th><th>性别</th><th>年级</th></tr></thread><tbody>";
+                    $.each(r.msg,function(i,item){
+                        result += "<tr><td>"+item.no+"</td>" + "<td>"+item.no2+"</td><td>"+item.name+"</td><td>"+item.gender+"</td>" + "<td>"+item.grade+"</td></tr>";
+                    });
+                    result += "</tbody></table>";
+                    $('#stu-modal-body-content').html(result);
+                    var todb = "<button data-href='"+form.attr('action')+"' id='stu-file-todb'" +
+                        " onclick='stuToDB()'" + "class='btn btn-primary'>确认无误,写入数据库</button>";
+                    $('#stu-modal-body-msg').html(todb);
+                }else{
+                    $('#stu-modal-body-msg').html(r.msg);
+                }
+            },
+            error: function () {
+                $('#stu-modal-body-msg').html('出错了');
+            }
+        });
+    });
+
+
+
     //编辑学生信息
     $('#edit-stu-detail').on('show.bs.modal', function (e) {
         var b = $(e.relatedTarget);
@@ -152,55 +208,71 @@ jQuery(document).ready(function ($) {
     });
     $('#edit-stu-detail-form').submit(function (e) {
         $.ajax({
-            type:'post',
-            url:$(this).attr('action'),
-            data:$(this).serialize(),
-            dataType:'json',
-            beforeSend:function(){$('#info').html('&nbsp;');},
+            type: 'post',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            dataType: 'json',
+            beforeSend: function () {
+                $('#info').html('&nbsp;');
+            },
             success: function (r) {
-                if (r.ok == 'true'){
+                if (r.ok == 'true') {
                     $('#info').html('修改成功,页面正在跳转');
                     location.reload();
-                }else{
+                } else {
                     $('#info').html(r.msg);
                 }
             },
-            error:function(){$('#info').val('发生了错误')}
+            error: function () {
+                $('#info').val('发生了错误')
+            }
         });
         return e.preventDefault();
     });
 
-    $('#reset-passwd').click(function(){$('#all-stu-type').val('reset');});
-    $('#delete-stu').click(function(){$('#all-stu-type').val('delete');});
+    $('#reset-passwd').click(function () {
+        $('#all-stu-type').val('reset');
+    });
+    $('#delete-stu').click(function () {
+        $('#all-stu-type').val('delete');
+    });
     $('#all-stu').submit(function (e) {
         var list = document.getElementsByName('check-list');
         var hascheck = false;
-        for (var i = 0;i<list.length;i++){
-            if (list[i].checked){hascheck=true;}
+        for (var i = 0; i < list.length; i++) {
+            if (list[i].checked) {
+                hascheck = true;
+            }
         }
-        if (!hascheck){
+        if (!hascheck) {
             $('#msg').html('至少选中一项');
             return e.preventDefault();
         }
         $.ajax({
-            type:'post',
-            url:$(this).attr('action'),
-            data:$(this).serialize(),
-            dataType:'json',
-            beforeSend:function(){$('#msg').html('&nbsp;');},
+            type: 'post',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            dataType: 'json',
+            beforeSend: function () {
+                $('#msg').html('&nbsp;');
+            },
             success: function (r) {
-                if (r.ok == 'true'){
+                if (r.ok == 'true') {
                     $('#msg').html(r.msg);
-                    if ($('#all-stu-type').val()=='delete'){
+                    if ($('#all-stu-type').val() == 'delete') {
                         $('#msg').append(' 2秒后自动刷新页面');
-                        setTimeout(function(){
+                        setTimeout(function () {
                             location.reload();
-                        },2000);
+                        }, 2000);
                     }
                 }
-                else{$('#msg').html(r.msg);}
+                else {
+                    $('#msg').html(r.msg);
+                }
             },
-            error:function(){$('#msg').html('出错了');}
+            error: function () {
+                $('#msg').html('出错了');
+            }
         });
         return e.preventDefault();
     });
@@ -255,6 +327,26 @@ jQuery(document).ready(function ($) {
     });
 
 });
+function stuToDB(){
+    //console.log('click');
+    $.ajax({
+        type:'GET',
+        url:$('#stu-file-todb').data('href'),
+        dataType:'json',
+        success:function(r){
+            if (r.ok == "true") {
+                $('#stu-modal-body-msg').append("<br>"+r.msg+"(2秒后跳转)");
+                setTimeout(function(){
+                    location.reload();
+                },2000);
+            }
+            else{$('#stu-modal-body-msg').append("<br><p class='text-danger'>"+r.msg+"(可能是已有重复记录)</p>");}
+        },
+        error:function(){
+            $('#stu-modal-body-msg').append("<br><p class='text-danger'></p>");
+        }
+    });
+}
 //重置密码//删除单个教师
 function resetOrDelete(id, type) {
     $.ajax({
