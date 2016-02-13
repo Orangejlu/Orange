@@ -45,7 +45,6 @@
                 </form>
             </div><!--.panel-body-->
         </div><!--.pabel-collapse-->
-        <%--TODO 学生名单文件上传--%>
         <div class="modal fade" id="stu-file-dlg" tabindex="-1" role="dialog" aria-labelledby="fileupload">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -60,7 +59,6 @@
                     <div class="modal-body">
                         <div id="stu-modal-body-content"></div>
                         <div id="stu-modal-body-msg"></div>
-                        <table></table>
                     </div><!--.modal-body-->
                     <div class="modal-footer">
                         <button type="button" class="btn" data-dismiss="modal">关闭</button>
@@ -85,9 +83,7 @@
              role="tabpanel" aria-labelledby="heading2">
             <div class="panel-body">
                 <div class="table-responsive" style="max-height: 500px;">
-                    <style>.checkbox-label {
-                        display: flex;
-                    }</style>
+                    <style>.checkbox-label {  display: flex;  }</style>
                     <script>
                         function selectAll() {
                             var flag = true;

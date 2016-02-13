@@ -13,6 +13,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageConsumer;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
@@ -28,78 +29,83 @@ public class IPServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("image/png");
-        String w = request.getParameter("w");
-        String h = request.getParameter("h");
-        String s = request.getParameter("s");
-        String c = request.getParameter("c");
-        int width = 300, height = 60, size = 18;
-        if (s != null) {
-            try {
-                size = Integer.parseInt(s);
-            } catch (Exception e) {
+        try {
+            response.setContentType("image/png");
+            String w = request.getParameter("w");
+            String h = request.getParameter("h");
+            String s = request.getParameter("s");
+            String c = request.getParameter("c");
+            int width = 300, height = 60, size = 18;
+            if (s != null) {
+                try {
+                    size = Integer.parseInt(s);
+                } catch (Exception e) {
+                }
             }
-        }
 
-        Font font = new Font("微软雅黑", Font.PLAIN, size);
-        BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        Graphics2D gd = img.createGraphics();
-        gd.setFont(font);
+            Font font = new Font("微软雅黑", Font.PLAIN, size);
+            BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+            Graphics2D gd = img.createGraphics();
+            gd.setFont(font);
 
-        String ip = JDBCUtil.getIp(request);
-        //ip = "1234::1234::1234::1234::1234::1234::1234::1234";
-        Date date = new Date();
-        //Java String和Date的转换
-        //http://www.cnblogs.com/bmbm/archive/2011/12/06/2342264.html
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss (z) E");
-        String d = sdf.format(date);
-        String me = "Powered By Youth．霖";
+            String ip = JDBCUtil.getIp(request);
+            //ip = "1234::1234::1234::1234::1234::1234::1234::1234";
+            Date date = new Date();
+            //Java String和Date的转换
+            //http://www.cnblogs.com/bmbm/archive/2011/12/06/2342264.html
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss (z) E");
+            String d = sdf.format(date);
+            String me = "Powered By Youth．霖";
 
-        double ipW = getWidth(font, ip, gd.getFontRenderContext()),
-                ipH = getHeight(font, ip, gd.getFontRenderContext()),
-                dateW = getWidth(font, d, gd.getFontRenderContext()),
-                dateH = getHeight(font, d, gd.getFontRenderContext()),
-                meW = getWidth(font, me, gd.getFontRenderContext()),
-                meH = getHeight(font, me, gd.getFontRenderContext());
+            double ipW = getWidth(font, ip, gd.getFontRenderContext()),
+                    ipH = getHeight(font, ip, gd.getFontRenderContext()),
+                    dateW = getWidth(font, d, gd.getFontRenderContext()),
+                    dateH = getHeight(font, d, gd.getFontRenderContext()),
+                    meW = getWidth(font, me, gd.getFontRenderContext()),
+                    meH = getHeight(font, me, gd.getFontRenderContext());
 
-        width = (int) ipW;
-        if (dateW > width) width = (int) dateW;
-        if (meW > width) width = (int) meW;
-        width += 2;
-        height = (int) (ipH + dateH + meH + 2);
+            width = (int) ipW;
+            if (dateW > width) width = (int) dateW;
+            if (meW > width) width = (int) meW;
+            width += 2;
+            height = (int) (ipH + dateH + meH + 2);
 
-        if (w != null) {
-            width = Integer.parseInt(w);
-        }
-        if (h != null) {
-            height = Integer.parseInt(h);
-        }
-
-        //Java生成透明背景图片
-        //http://snkcxy.iteye.com/blog/1872229
-        img = gd.getDeviceConfiguration().createCompatibleImage(width, height, Transparency.TRANSLUCENT);
-        gd = img.createGraphics();
-        gd.setFont(font);
-        //随机颜色
-        Color color = new Color(
-                (new Double(Math.random() * 128)).intValue() + 128,
-                (new Double(Math.random() * 128)).intValue() + 128,
-                (new Double(Math.random() * 128)).intValue() + 128);
-        if (c != null) {
-            try {
-                //Java中颜色的String和Color对象之间的互相转换
-                //http://winhack.iteye.com/blog/1843781
-                color = new Color(Integer.parseInt(c, 16));
-            } catch (Exception e) {
+            if (w != null) {
+                width = Integer.parseInt(w);
             }
-        }
-        gd.setColor(color);
-        gd.drawRect(0, 0, width - 1, height - 1);
+            if (h != null) {
+                height = Integer.parseInt(h);
+            }
 
-        gd.drawString(d, (float) ((width - dateW) / 2), (float) (height / 3));
-        gd.drawString(ip, (float) ((width - ipW) / 2), (float) (height / 3 * 2));
-        gd.drawString(me, (float) (width - meW) / 2, (float) (height - 3));
-        ImageIO.write(img, "png", response.getOutputStream());
+            //Java生成透明背景图片
+            //http://snkcxy.iteye.com/blog/1872229
+            img = gd.getDeviceConfiguration().createCompatibleImage(width, height, Transparency.TRANSLUCENT);
+            gd = img.createGraphics();
+            gd.setFont(font);
+            //随机颜色
+            Color color = new Color(
+                    (new Double(Math.random() * 128)).intValue() + 128,
+                    (new Double(Math.random() * 128)).intValue() + 128,
+                    (new Double(Math.random() * 128)).intValue() + 128);
+            if (c != null) {
+                try {
+                    //Java中颜色的String和Color对象之间的互相转换
+                    //http://winhack.iteye.com/blog/1843781
+                    color = new Color(Integer.parseInt(c, 16));
+                } catch (Exception e) {
+                }
+            }
+            gd.setColor(color);
+            gd.drawRect(0, 0, width - 1, height - 1);
+
+            gd.drawString(d, (float) ((width - dateW) / 2), (float) (height / 3));
+            gd.drawString(ip, (float) ((width - ipW) / 2), (float) (height / 3 * 2));
+            gd.drawString(me, (float) (width - meW) / 2, (float) (height - 3));
+            ImageIO.write(img, "png", response.getOutputStream());
+        } catch (Exception e) {
+            //e.printStackTrace();
+            System.out.print(e.getMessage());
+        }
     }
 
     /**

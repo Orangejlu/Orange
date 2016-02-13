@@ -3,7 +3,6 @@ jQuery(document).ready(function ($) {
     if (typeof (addmyclass) == "function") {
         addmyclass();
     }
-
     //获取公告
     $('#notice-detail').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
@@ -28,6 +27,8 @@ jQuery(document).ready(function ($) {
             }
         });
     });
+
+    //region teacher
     //文件上传
     $('#file-dlg').on('shown.bs.modal', function (e) {
         var button = $(e.relatedTarget);
@@ -138,7 +139,8 @@ jQuery(document).ready(function ($) {
                 '<div id="tip" class="text-danger">&nbsp;</div></div>');
         }
     });
-
+    //endregion
+    //region student
     //上传学生名单
     $('#stu-file-dlg').on('shown.bs.modal', function (e) {
         var form = $('#stu-file-upload-form');
@@ -193,8 +195,6 @@ jQuery(document).ready(function ($) {
             }
         });
     });
-
-
 
     //编辑学生信息
     $('#edit-stu-detail').on('show.bs.modal', function (e) {
@@ -300,6 +300,59 @@ jQuery(document).ready(function ($) {
         });
         return e.preventDefault();
     });
+    //endregion
+    //region course
+    //添加
+    $('.add-course').submit(function (e) {
+        var tip = $(this).data("msg");
+        $.ajax({
+            url:$(this).attr('action'),
+            type:'POST',
+            data:$(this).serialize(),
+            dataType:"json",
+            beforeSend:function(){
+                $(tip).html("");
+            },
+            success: function (r) {
+                if (r.ok=="true"){
+                    $(tip).html(r.msg+"(2秒后跳转)");
+                    setTimeout(function(){location.reload();},2000);
+                }else
+                    $(tip).html(r.msg);
+            },
+            error:function(){$(tip).html("出错了")}
+        });
+        return e.preventDefault();
+    });
+    //删除
+    $('.course-delete').click(function (e) {
+        //$(document.body).height()
+        var msg = "<div class='alert alert-danger alert-dismissible my-alert' role='alert'>" +
+            "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">" +
+            "<span aria-hidden=\"true\">&times;</span></button>" +
+            "<strong>注意：</strong>";
+        $.ajax({
+            type:'GET',
+            url:$(this).attr('href'),
+            dataType:'json',
+            success: function (r) {
+                if (r.ok == "true"){
+                    msg += r.msg + "(2秒后跳转)</div>";
+                    setTimeout(function(){location.reload();},2000);
+                }else{
+                    msg += r.msg + "</div>";
+                }
+            },
+            error:function(){
+                msg += "出错了<div>";
+            },
+            complete: function () {
+                $('#alert-tip').append(msg).css('top', $(document.body).height() / 2);
+            }
+        });
+        return e.preventDefault();
+    });
+    //endregion
 
     //更改密码
     $('#change-pass').submit(function (e) {
@@ -327,6 +380,7 @@ jQuery(document).ready(function ($) {
     });
 
 });
+
 function stuToDB(){
     //console.log('click');
     $.ajax({
