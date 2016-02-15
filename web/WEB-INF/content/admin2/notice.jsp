@@ -24,8 +24,8 @@
         <tbody>
 
         <%
-            String basePath1 = request.getScheme()+"://"+request.getServerName()+":"
-                    +request.getServerPort()+request.getContextPath()+"/";
+            String basePath1 = request.getScheme() + "://" + request.getServerName() + ":"
+                    + request.getServerPort() + request.getContextPath() + "/";
             int i = 0;
             while (rs.next()) {
                 if (rs.getString(JDBCUtil.NOTICE_TYPE).contains("1") && i < JDBCUtil.NOTICE_LIMIT) {
@@ -38,41 +38,49 @@
                    data-toggle="modal"
                    data-noticepubtime="<%=rs.getString("pubtime")%>"
                    data-noticetitle="<%=rs.getString("title")%>"
-                   data-noticeid="<%=rs.getString("id")%>"><%=rs.getString("title")%></a>
+                   data-noticeid="<%=rs.getString("id")%>"><%=rs.getString("title")%>
+                </a>
             </td>
-            <td class="pubtime"><date><%=rs.getString("pubtime")%></date></td></tr>
+            <td class="pubtime">
+                <date><%=rs.getString("pubtime")%>
+                </date>
+            </td>
+        </tr>
         <%
                 }//if
             }//while rs.next
-            if (i!=0){
+            if (i != 0) {
         %>
         <!--[if lt IE 9]>
         <i style="display: block;text-align: center;background-color: #fff;">
             您的浏览器不支持bootstrap的模态框技术因此将不能看到公告详情</i>
         <![endif]-->
-        <div class="modal fade" id="notice-detail" tabindex="-1" role="dialog"
-             aria-labelledby="notice-title">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h3 id="notice-title">公告详情</h3></div>
-                    <div class="modal-body">
-                        <header><date id="notice-pubtime"></date></header>
-                        <a href="<%=basePath1%>" id="notice-remote-uri" class="hide"></a>
-                        <div id="notice-content">正在加载公告详情...</div>
-                    </div><!--.modal-body-->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
-                    </div>
-                </div><!--.modal-content-->
-            </div><!--.modal-dialog-->
-        </div><!--.modal-->
         <%
             }
         %>
         </tbody>
     </table>
 </div>
+<div class="modal fade" id="notice-detail" tabindex="-1" role="dialog"
+     aria-labelledby="notice-title">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 id="notice-title">公告详情</h3></div>
+            <div class="modal-body">
+                <header>
+                    <date id="notice-pubtime"></date>
+                </header>
+                <a href="<%=basePath1%>" id="notice-remote-uri" class="hide"></a>
+                <div id="notice-content">正在加载公告详情...</div>
+            </div><!--.modal-body-->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!--.modal-content-->
+    </div><!--.modal-dialog-->
+</div>
+<!--.modal-->

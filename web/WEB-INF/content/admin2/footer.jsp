@@ -9,7 +9,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ page pageEncoding="UTF-8" language="java" %>
 
-<div class="footer" id="copyright" style="background-image: url('ip.png');background-size: contain;background-repeat: round;">
+<div class="footer" id="copyright" style="background-image: url('<%=basePath%>ip.png');background-size: contain;background-repeat: round;">
     <p>&copy; 2015 Orange JLU.<span>Your IP:<%=request.getRemoteAddr()%></span></p>
 
     <p>

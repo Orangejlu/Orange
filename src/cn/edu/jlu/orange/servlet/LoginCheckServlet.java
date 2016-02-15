@@ -95,7 +95,7 @@ public class LoginCheckServlet extends HttpServlet {
                     pstmt.setString(2, password);
                     rs = pstmt.executeQuery();
                     while (rs.next()) {
-                        session.setAttribute("logined", "logined");
+                        session.setAttribute("logined", rs.getString("s_name"));
                         session.setAttribute("type", 3);
                         System.out.println("学生登录");
                         //response.sendRedirect("user/");
@@ -109,7 +109,7 @@ public class LoginCheckServlet extends HttpServlet {
                     pstmt.setString(2, password);
                     rs = pstmt.executeQuery();
                     while (rs.next()) {
-                        session.setAttribute("logined", "logined");
+                        session.setAttribute("logined", rs.getString("t_name"));
                         session.setAttribute("type", 2);
                         System.out.println("教师登录");
                         //response.sendRedirect("teacher/");

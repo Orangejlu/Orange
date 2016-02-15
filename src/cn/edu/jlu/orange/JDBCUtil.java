@@ -16,7 +16,6 @@ public class JDBCUtil {
 
     static {
         try {
-//            FileInputStream in = new FileInputStream(new File(""));
             InputStream in = JDBCUtil.class.getClassLoader().getResourceAsStream("cn/edu/jlu/orange/config.properties");
             Properties config = new Properties();
             config.load(in);

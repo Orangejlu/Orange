@@ -34,10 +34,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href="<%=basePath%>">
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="<%=basePath%>favicon.ico">
     <!--link rel="stylesheet" href="css/style.css" /-->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <script src="js/jquery-2.1.4.min.js"></script>
+    <link rel="stylesheet" href="<%=basePath%>css/bootstrap.min.css">
+    <script src="<%=basePath%>js/jquery-2.1.4.min.js"></script>
     <!--[if lt IE 9]>
     <i style="display: block;text-align: center;background-color: #fff;">您的浏览器版本太低！请使用使用
         <span>IE 9+</span>、
