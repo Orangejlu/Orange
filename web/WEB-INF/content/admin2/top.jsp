@@ -53,8 +53,22 @@
     ul.nav li:hover {
         background-color: #ccc;
     }
-    .container{width: 100%;}
-    span.block{display: block;}
+
+    .container {
+        width: 100%;
+    }
+
+    .block {
+        display: block;
+    }
+
+    button.multiselect {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-style: none;
+        margin: -6px 0;
+        height: 32px;
+    }
 </style>
 </head>
 <body>
@@ -73,7 +87,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <span class="navbar-brand">欢迎您,<mark><%=session.getAttribute("logined")%>
+                <span class="navbar-brand">欢迎您<mark
+                        title="来自<%=session.getAttribute("dept")%>的教务用户"><%=session.getAttribute("logined")%>
                 </mark></span>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

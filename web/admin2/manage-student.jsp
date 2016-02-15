@@ -83,7 +83,9 @@
              role="tabpanel" aria-labelledby="heading2">
             <div class="panel-body">
                 <div class="table-responsive" style="max-height: 500px;">
-                    <style>.checkbox-label {  display: flex;  }</style>
+                    <style>.checkbox-label {
+                        display: flex;
+                    }</style>
                     <script>
                         function selectAll() {
                             var flag = true;
@@ -125,9 +127,16 @@
                             <sql:setDataSource var="sql" driver="oracle.jdbc.driver.OracleDriver"
                                                url="jdbc:oracle:thin:@127.0.0.1:1521:orcl"
                                                user="ouser" password="Ozszs233"/>
-
                             <sql:query var="result" dataSource="${sql}">
-                                SELECT s_id,s_id2,s_name,s_gender,s_grade FROM student ORDER BY s_id
+                                SELECT s_id,s_id2,s_name,s_gender,s_grade FROM student WHERE d_name = ? ORDER BY s_id
+                                <sql:param value="${dept}"/>
+                                <%--
+                                JSTL 与 JSP 或者 Java 相互传递变量的代码
+                                http://blog.csdn.net/joyous/article/details/6689861
+
+                                JSTL可以读取session等作用域的变量。
+                                比如session.setAttribute("a",b);那么可以${a}取出b
+                                --%>
                             </sql:query>
                             <c:set var="i" value="0"/>
                             <c:forEach var="row" items="${result.rows}">

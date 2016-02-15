@@ -1,8 +1,6 @@
-<%@ page import="java.sql.Connection" %>
 <%@ page import="cn.edu.jlu.orange.JDBCUtil" %>
-<%@ page import="java.sql.Statement" %>
-<%@ page import="java.sql.ResultSet" %>
-<%@ page import="java.sql.SQLException" %><%--
+<%@ page import="java.sql.*" %>
+<%@ page import="java.util.Calendar" %><%--
   Created by IntelliJ IDEA.
   User: lin
   Date: 2015-12-19-019
@@ -22,24 +20,138 @@
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="heading4">
             <h4 class="panel-title">
-                <span class="collapsed block" aria-expanded="false" role="button"
-                      data-toggle="collapse" data-parent="#accordion"
-                      data-target="#collapse4"
-                      aria-expanded="true" aria-controls="collapse4">
+                <a class="collapsed block" aria-expanded="false" role="button"
+                   data-toggle="collapse" data-parent="#accordion"
+                   data-target="#collapse4"
+                   aria-expanded="true" aria-controls="collapse4">
                     开课
-                </span>
+                </a>
             </h4>
         </div><!--.panel-heading-->
         <div id="collapse4" class="panel-collapse collapse in"
              role="tabpane" aria-labelledby="heading4">
             <div class="panel-body">
-                <form action=""></form>
+                <form action="" class="form-inline">
+                    <div class="input-group">
+                        <label for="sec-id" class="input-group-addon">编号</label>
+                        <input type="text" id="sec-id" name="sec-id" class="form-control" required placeholder="540001">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="sec-semester" class="input-group-addon">学期</label>
+                        <select name="sec-semester" id="sec-semester" class="form-control">
+                            <%
+                                Calendar now = Calendar.getInstance();
+                                int year = now.get(Calendar.YEAR);
+                                for (int i = year - 4; i < year + 4; i++) {
+                                    if (i == year) {
+                                        out.println("<option selected value = '" + i + "-" + (i + 1) + "-1" + "'>"
+                                                + i + "-" + (i + 1) + "学年第1学期</option>");
+                                        out.println("<option value = '" + i + "-" + (i + 1) + "-2" + "'>"
+                                                + i + "-" + (i + 1) + "学年第2学期</option>");
+                                    } else {
+                                        out.println("<option value = '" + i + "-" + (i + 1) + "-1" + "'>"
+                                                + i + "-" + (i + 1) + "学年第1学期</option>");
+                                        out.println("<option value = '" + i + "-" + (i + 1) + "-2" + "'>"
+                                                + i + "-" + (i + 1) + "学年第2学期</option>");
+                                    }
+                                }
+                            %>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="sec-creadits" class="input-group-addon">学分</label>
+                        <input type="text" id="sec-creadits" name="sec-creadits" class="form-control" required
+                               placeholder="2">
+                    </div>
+                    <div class="input-group">
+                        <label for="sec-course" class="input-group-addon">课程</label>
+                        <select name="sec-course" id="sec-course" class="form-control">
+                            <%
+                                Connection con = JDBCUtil.getConnection();
+                                try {
+                                    PreparedStatement pstmt = con.prepareStatement("SELECT c_id,c_title FROM course WHERE d_name = ?");
+                                    pstmt.setString(1, (String) session.getAttribute("dept"));
+                                    ResultSet rs = pstmt.executeQuery();
+                                    while (rs.next()) {
+                                        out.println("<option value='" + rs.getString("c_id") + "'>"
+                                                + rs.getString("c_title") + "</option>");
+                                    }
+                                } catch (SQLException e) {
+
+                                }
+                            %>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="sec-type" class="input-group-addon">类型</label>
+                        <select name="sec-type" id="sec-type" class="form-control">
+                            <option value="必修">必修</option>
+                            <option value="选修">选修</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="sec-teacher" class="input-group-addon">教师</label>
+                        <select name="sec-teacher" id="sec-teacher" class="form-control">
+                            <%
+                                try {
+                                    PreparedStatement pstmt = con.prepareStatement("SELECT t_id,t_name FROM teacher WHERE d_name = ?");
+                                    pstmt.setString(1, (String) session.getAttribute("dept"));
+                                    ResultSet rs = pstmt.executeQuery();
+                                    while (rs.next()) {
+                                        out.println("<option value='" + rs.getString("t_id") + "'>"
+                                                + rs.getString("t_name") + "</option>");
+                                    }
+                                } catch (SQLException e) {
+
+                                }
+                            %>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="sec-dept" class="input-group-addon">院系</label>
+                        <select name="sec-dept" id="sec-dept" class="form-control" multiple>
+                            <%
+                                try {
+                                    Statement stmt = con.createStatement();
+                                    ResultSet rs = stmt.executeQuery("SELECT d_id,d_name FROM department");
+                                    while (rs.next()) {
+                                        if (rs.getString("d_name").equals(session.getAttribute("dept")))
+                                            out.print("<option selected value='" + rs.getString("d_id") + "'>"
+                                                    + rs.getString("d_name") + "</option>");
+                                        else out.print("<option value='" + rs.getString("d_id") + "'>"
+                                                + rs.getString("d_name") + "</option>");
+                                    }
+                                } catch (SQLException e) {
+
+                                }
+                            %>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="sec-grade" class="input-group-addon">年级</label>
+                        <select name="sec-grade" id="sec-grade" class="form-control">
+                            <%
+                                for (int i = year - 4; i < year + 4; i++) {
+                                    if (i == year)
+                                        out.print("<option selected value='" + i + "'>" + i + "</option>");
+                                    else out.print("<option value='" + i + "'>" + i + "</option>");
+
+                                }
+                            %>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <button type="submit" class="btn btn-primary">添加</button>
+                    </div>
+                </form>
+                <%--TODO 开课记录,教室、时段的归属院系--%>
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>
                         <th>编号</th>
                         <th>课程</th>
-                        <th>教室</th>
                         <th>学期</th>
                         <th>类型</th>
                         <th>学分</th>
@@ -54,9 +166,9 @@
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="heading1">
             <h4 class="panel-title">
-                <span class="collapsed block" aria-expanded="false" role="button"
-                      data-toggle="collapse" data-parent="#accordion" data-target="#collapse1"
-                      aria-expanded="true" aria-controls="collapse1">课程</span>
+                <a class="collapsed block" aria-expanded="false" role="button"
+                   data-toggle="collapse" data-parent="#accordion" data-target="#collapse1"
+                   aria-expanded="true" aria-controls="collapse1">课程</a>
             </h4>
         </div><!--.panel-heading-->
         <div id="collapse1" class="panel-collapse collapse"
@@ -89,15 +201,16 @@
                     </thead>
                     <tbody>
                     <%
-                        Connection con = JDBCUtil.getConnection();
                         try {
-                            Statement stmt = con.createStatement();
-                            ResultSet rs = stmt.executeQuery("SELECT c_id,c_title FROM course");
+                            PreparedStatement pstmt = con.prepareStatement("SELECT c_id,c_title,d_name FROM course WHERE d_name = ?");
+                            pstmt.setString(1, (String) session.getAttribute("dept"));
+                            ResultSet rs = pstmt.executeQuery();
                             while (rs.next()) {
                                 out.print("<tr><td>" + rs.getString("c_id")
-                                        + "</td><td>" + rs.getString("c_title") + "</td>" +
-                                        "<td><a class='text-danger course-delete' " +
-                                        "href='admin2/addcourse.do?target=course&id=" + rs.getString("c_id") + "'>删除</a></td></tr>");
+                                        + "</td><td>" + rs.getString("c_title") + "</td>"
+                                        + "<td><a class='text-danger course-delete' "
+                                        + "href='admin2/addcourse.do?target=course&id="
+                                        + rs.getString("c_id") + "'>删除</a></td></tr>");
                             }
                         } catch (SQLException e) {
                             out.println("<tr><td colspan='3' class='text-danger'>发生了异常(" + e.getMessage() + ")</td></tr>");
@@ -112,12 +225,12 @@
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="heading2">
             <h4 class="panel-title">
-                <span class="collapsed block" aria-expanded="false" role="button"
-                      data-toggle="collapse" data-parent="#accordion"
-                      data-target="#collapse2"
-                      aria-expanded="true" aria-controls="collapse2">
+                <a class="collapsed block" aria-expanded="false" role="button"
+                   data-toggle="collapse" data-parent="#accordion"
+                   data-target="#collapse2"
+                   aria-expanded="true" aria-controls="collapse2">
                     教室
-                </span>
+                </a>
             </h4>
         </div><!--.panel-heading-->
         <div id="collapse2" class="panel-collapse collapse"
@@ -187,12 +300,12 @@
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="heading3">
             <h4 class="panel-title">
-                <span class="collapsed block" aria-expanded="false" role="button"
-                      data-toggle="collapse" data-parent="#accordion"
-                      data-target="#collapse3"
-                      aria-expanded="true" aria-controls="collapse3">
+                <a class="collapsed block" aria-expanded="false" role="button"
+                   data-toggle="collapse" data-parent="#accordion"
+                   data-target="#collapse3"
+                   aria-expanded="true" aria-controls="collapse3">
                     时段
-                </span>
+                </a>
             </h4>
         </div><!--.panel-heading-->
         <div id="collapse3" class="panel-collapse collapse"

@@ -31,7 +31,7 @@
         <tr>
             <td class="shap"><span title="在数据库中的ID为：<%=rs.getString("id")%>"><%=++i%></span></td>
             <td class="title">
-                <a href="<%=basePath%>user/#notice-detail"
+                <a href="<%=basePath%>teacher/#notice-detail"
                    data-target="#notice-detail"
                    data-toggle="modal"
                    data-noticepubtime="<%=rs.getString("pubtime")%>"

@@ -100,10 +100,11 @@ jQuery(document).ready(function ($) {
             dataType: 'json',
             success: function (r) {
                 if (r.ok == 'true') {
-                    $('#msg').html(r.msg + ' (2秒后此对话框自动关闭)')
+                    $('#msg').html(r.msg + ' (2秒后跳转)')
                         .hide().show('nomal', function () {
                         setTimeout(function () {
                             $('#edit').modal('hide');
+                            location.reload();
                         }, 2000);
                     });
                 } else {
@@ -352,6 +353,20 @@ jQuery(document).ready(function ($) {
         });
         return e.preventDefault();
     });
+
+    $('#sec-dept').multiselect({
+        buttonContainer: '<div class="btn-group form-control" />',
+        inheritClass: true,
+        enableFiltering: true,
+        includeSelectAllOption: true,
+        selectAllJustVisible: false,
+        selectAllText: '全选',
+        nonSelectedText:'未选择',
+        nSelectedText: ' - 项已选',
+        allSelectedText: '已全选',
+        filterPlaceholder: '搜索'
+    });
+    //$('input.multiselect-search').attr('placeholder','搜索');
     //endregion
 
     //更改密码

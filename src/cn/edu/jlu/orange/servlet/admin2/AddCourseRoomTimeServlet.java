@@ -48,11 +48,12 @@ public class AddCourseRoomTimeServlet extends HttpServlet {
                     error = true;
                     break;
                 }
-                sql = "INSERT INTO course(c_id,c_title) VALUES (?,?)";
+                sql = "INSERT INTO course(c_id,c_title,d_name) VALUES (?,?,?)";
                 try {
                     PreparedStatement pstmt = con.prepareStatement(sql);
                     pstmt.setString(1, courseId);
                     pstmt.setString(2, courseTitle);
+                    pstmt.setString(3, (String) session.getAttribute("dept"));
                     int i = pstmt.executeUpdate();
                     if (i > 0) {
                         System.out.println("插入课程:" + i + "条记录");
