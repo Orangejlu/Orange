@@ -78,13 +78,14 @@ public class AddCourseRoomTimeServlet extends HttpServlet {
                     error = true;
                     break;
                 }
-                sql = "INSERT INTO classroom(r_id,r_name,r_size,r_building) VALUES (?,?,?,?)";
+                sql = "INSERT INTO classroom(r_id,r_name,r_size,r_building,d_name) VALUES (?,?,?,?,?)";
                 try {
                     PreparedStatement pstmt = con.prepareStatement(sql);
                     pstmt.setString(1, roomId);
                     pstmt.setString(2, roomName);
                     pstmt.setString(3, roomSize);
                     pstmt.setString(4, roomBuilding);
+                    pstmt.setString(5, (String) session.getAttribute("dept"));
                     int i = pstmt.executeUpdate();
                     if (i > 0) {
                         System.out.println("添加教室成功:" + i + "条记录");
@@ -112,7 +113,7 @@ public class AddCourseRoomTimeServlet extends HttpServlet {
                     error = true;
                     break;
                 }
-                sql = "INSERT INTO timeslot(ts_id,ts_sweek,ts_eweek,ts_day,ts_sclass,ts_eclass) VALUES (?,?,?,?,?,?)";
+                sql = "INSERT INTO timeslot(ts_id,ts_sweek,ts_eweek,ts_day,ts_sclass,ts_eclass,d_name) VALUES (?,?,?,?,?,?,?)";
                 try {
                     PreparedStatement pstmt = con.prepareStatement(sql);
                     pstmt.setString(1, tsId);
@@ -121,6 +122,7 @@ public class AddCourseRoomTimeServlet extends HttpServlet {
                     pstmt.setString(4, tsDay);
                     pstmt.setString(5, tsStartClass);
                     pstmt.setString(6, tsEndClass);
+                    pstmt.setString(7, (String) session.getAttribute("dept"));
                     int i = pstmt.executeUpdate();
                     if (i > 0) {
                         System.out.println("添加时段成功:" + i + "条记录");
@@ -133,6 +135,60 @@ public class AddCourseRoomTimeServlet extends HttpServlet {
                 }
                 return;
             }//endregion
+            case "sec": {
+                String sec_id = request.getParameter("sec-id");
+                String sec_course_id = request.getParameter("sec-course");
+                String sec_semester = request.getParameter("sec-semester");
+                String sec_creadits = request.getParameter("sec-creadits");
+                String sec_type = request.getParameter("sec-type");
+                String sec_teacher_id = request.getParameter("sec-teacher");
+                //String sec_dept = request.getParameter("sec-dept");
+                String[] sec_dept = request.getParameterValues("sec-dept");
+                String sec_grade = request.getParameter("sec-grade");
+                String sec_room_id = request.getParameter("sec-room");
+                String sec_ts_id = request.getParameter("sec-ts");
+                if (sec_id == null || sec_course_id == null || sec_semester == null || sec_creadits == null
+                        || sec_type == null || sec_teacher_id == null || sec_dept == null
+                        || sec_grade == null || sec_room_id == null || sec_ts_id == null) {
+                    error = true;
+                    break;
+                }
+                String sec_depts = "";
+                for (String dept : sec_dept) {
+                    sec_depts += dept + ";";
+                }
+                //System.out.println(sec_depts);
+                if (sec_course_id.equals("false") || sec_teacher_id.equals("false")
+                        || sec_room_id.equals("false") || sec_ts_id.equals("false")) {
+                    out.println("{\"ok\":\"false\",\"msg\":\"参数错误(请先添加课程/教师/教室/时段等信息再选择)\"}");
+                    return;
+                }
+                sql = "INSERT INTO sec(sec_id,sec_semester,sec_type,sec_creadits," +
+                        "c_id,t_id,sec_depts,s_grade,r_id,ts_id,d_name) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+                try {
+                    PreparedStatement pstmt = con.prepareStatement(sql);
+                    pstmt.setString(1, sec_id);
+                    pstmt.setString(2, sec_semester);
+                    pstmt.setString(3, sec_type);
+                    pstmt.setString(4, sec_creadits);
+                    pstmt.setString(5, sec_course_id);
+                    pstmt.setString(6, sec_teacher_id);
+                    pstmt.setString(7, sec_depts);
+                    pstmt.setString(8, sec_grade);
+                    pstmt.setString(9, sec_room_id);
+                    pstmt.setString(10, sec_ts_id);
+                    pstmt.setString(11, (String) session.getAttribute("dept"));
+                    int i = pstmt.executeUpdate();
+                    if (i > 0) {
+                        System.out.println("插入开课记录成功");
+                        out.println("{\"ok\":\"true\",\"msg\":\"插入开课记录成功(" + i + "条)\"}");
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    out.println("{\"ok\":\"false\"," +
+                            "\"msg\":\"添加记录失败(" + JDBCUtil.jsonReplace(e.getMessage()) + ")\"}");
+                }
+            }
         }
         if (error)
             out.println("{\"ok\":\"false\",\"msg\":\"参数错误\"}");
@@ -208,6 +264,23 @@ public class AddCourseRoomTimeServlet extends HttpServlet {
                 } catch (SQLException e) {
                     out.println("{\"ok\":\"false\"," +
                             "\"msg\":\"删除时段失败:" + JDBCUtil.jsonReplace(e.getMessage()) + "\"}");
+                }
+                return;
+            }
+            case "sec": {
+                sql = "DELETE FROM sec WHERE sec_id = ?";
+                try {
+                    PreparedStatement pstmt = con.prepareStatement(sql);
+                    pstmt.setString(1, id);
+                    int i = pstmt.executeUpdate();
+                    if (i > 0) {
+                        System.out.println("删除开课记录成功:(" + i + "条记录已删除)");
+                        out.println("{\"ok\":\"true\",\"msg\":\"删除开课记录成功:(" + i + "条记录已删除)\"}");
+                    } else
+                        out.println("{\"ok\":\"false\",\"msg\":\"删除开课记录失败\"}");
+                } catch (SQLException e) {
+                    out.println("{\"ok\":\"false\"," +
+                            "\"msg\":\"删除开课记录失败:" + JDBCUtil.jsonReplace(e.getMessage()) + "\"}");
                 }
                 return;
             }
