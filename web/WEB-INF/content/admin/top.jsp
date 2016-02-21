@@ -14,7 +14,7 @@
         return;
     }
 %>
-<title>超级管理员管理 - 学生选课系统</title>
+<title>超级管理员 - 学生选课系统</title>
 <style>
     html, body {
         height: 100%;

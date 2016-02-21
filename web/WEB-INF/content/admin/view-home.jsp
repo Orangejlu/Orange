@@ -1,15 +1,83 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="cn.edu.jlu.orange.JDBCUtil" %>
+<%@ page import="java.util.Calendar" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ page pageEncoding="UTF-8" language="java" %>
 <h3>说明</h3>
-
 <p>您是超级管理员，具有院系管理与增删教务账号的权限，点击上方标签即可进入相应管理界面。</p>
+<h3>开放选课</h3>
+<%
+    Connection con = JDBCUtil.getConnection();
+    boolean opened = false;
+    try {
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM info WHERE key = 'opened'");
+        while (rs.next()) {
+            if (rs.getString("value").equals("true"))
+                opened = true;
+        }
+        rs.close();
+        stmt.close();
+    } catch (SQLException e) {
+    }
+    if (opened) {
+        out.println("<p>当前状态：<span id='opened'>开放</span>。" +
+                "<a id='openbtn' class='btn btn-info' href='switch.do?open=false'>关闭选课</a></p>");
+    } else {
+        out.println("<p>当前状态：<span id='opened'>未开放</span>。" +
+                "<a id='openbtn' class='btn btn-info' href='switch.do?open=true'>开放选课</a></p>");
+    }
+
+    Calendar calendar = Calendar.getInstance();
+    int year = calendar.get(Calendar.YEAR);
+    String semester = "无";
+    try {
+        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM info WHERE key = 'semester'");
+        ResultSet rs = pstmt.executeQuery();
+        while (rs.next()) {
+            semester = rs.getString("value");
+        }
+        rs.close();
+        pstmt.close();
+    } catch (SQLException e) {
+    }
+%>
+
+<form action="switch.do" class="form-inline" id="semester-form">
+    当前开课计划：<span id="semester-current"><%=semester%></span>
+    <div class="input-group">
+        <label for="semester" class="input-group-addon">选择开课计划</label>
+        <select name="semester" id="semester" class="form-control">
+            <%
+                for (int i = year - 4; i < year + 4; i++) {
+                    if (calendar.get(Calendar.MONTH) < 6) {
+                        //第二学期
+                        if (i == year - 1) {
+                            out.println("<option value='" + i + "-" + (i + 1) + "-1'>" + i + "-" + (i + 1) + "学年 第1学期</option>");
+                            out.println("<option selected value='" + i + "-" + (i + 1) + "-2'>" + i + "-" + (i + 1) + "学年 第2学期</option>");
+                        } else {
+                            out.println("<option value='" + i + "-" + (i + 1) + "-1'>" + i + "-" + (i + 1) + "学年 第1学期</option>");
+                            out.println("<option value='" + i + "-" + (i + 1) + "-2'>" + i + "-" + (i + 1) + "学年 第2学期</option>");
+                        }
+                    } else {
+                        if (i == year) {
+                            out.println("<option selected value='" + i + "-" + (i + 1) + "-1'>" + i + "-" + (i + 1) + "学年 第1学期</option>");
+                            out.println("<option value='" + i + "-" + (i + 1) + "-2'>" + i + "-" + (i + 1) + "学年 第2学期</option>");
+                        } else {
+                            out.println("<option value='" + i + "-" + (i + 1) + "-1'>" + i + "-" + (i + 1) + "学年 第1学期</option>");
+                            out.println("<option value='" + i + "-" + (i + 1) + "-2'>" + i + "-" + (i + 1) + "学年 第2学期</option>");
+                        }
+                    }
+                }
+            %>
+        </select></div>
+    <div class="input-group">
+        <button class="btn btn-primary" type="submit">提交</button>
+    </div>
+</form>
 
 <h3>公告管理</h3>
-
 <p>以下是已发布的公告</p>
-
 <div class="container">
     <h4>已发布的公告</h4>
     <button data-target="#new" type="button"
@@ -29,19 +97,98 @@
             </thead>
             <tbody>
             <%
-                Connection con = JDBCUtil.getConnection();
-                ResultSet rs = JDBCUtil.getAllNotice();
-                int i = 0;
-                while (rs.next()) {
-                    String readtype = rs.getString(5);
-                    if (readtype == null) readtype = "";
-                    String admin2see = "", teachersee = "", studentsee = "";
-                    if (readtype.contains("1")) admin2see = "√";
-                    if (readtype.contains("2")) teachersee = "√";
-                    if (readtype.contains("3")) studentsee = "√";
+                ResultSet
+                        rs
+                        =
+                        JDBCUtil
+                                .
+                                        getAllNotice
+                                                (
+                                                );
+                int
+                        i
+                        =
+                        0;
+                while
+                        (
+                        rs
+                                .
+                                        next
+                                                (
+                                                )
+                        ) {
+                    String
+                            readtype
+                            =
+                            rs
+                                    .
+                                            getString
+                                                    (
+                                                            5
+                                                    );
+                    if
+                            (
+                            readtype
+                                    ==
+                                    null
+                            )
+                        readtype
+                                =
+                                ""
+                                ;
+                    String
+                            admin2see
+                            =
+                            "",
+                            teachersee
+                                    =
+                                    "",
+                            studentsee
+                                    =
+                                    "";
+                    if
+                            (
+                            readtype
+                                    .
+                                            contains
+                                                    (
+                                                            "1"
+                                                    )
+                            )
+                        admin2see
+                                =
+                                "√"
+                                ;
+                    if
+                            (
+                            readtype
+                                    .
+                                            contains
+                                                    (
+                                                            "2"
+                                                    )
+                            )
+                        teachersee
+                                =
+                                "√"
+                                ;
+                    if
+                            (
+                            readtype
+                                    .
+                                            contains
+                                                    (
+                                                            "3"
+                                                    )
+                            )
+                        studentsee
+                                =
+                                "√"
+                                ;
             %>
             <tr>
-                <td><span title="在数据库中的ID为:<%=rs.getString(1)%>"><%=++i%></span>
+                <td><span title="在数据库中的ID为:<%=rs.getString(1)%>"><%=++
+                        i%></span>
                 </td>
                 <td>
                     <a href="admin/#detail" data-target="#detail" data-toggle="modal"
@@ -49,7 +196,12 @@
                        data-title="<%=rs.getString(2)%>"
                        data-time1="<%=rs.getString(4)%>"
                        data-type="<%=rs.getString(5)%>"
-                       data-id="<%=rs.getString(1)%>"><%=rs.getString(2)%>
+                       data-id="<%=rs.getString(1)%>"><%=rs
+                            .
+                                    getString
+                                            (
+                                                    2
+                                            )%>
                     </a>
                 </td>
                 <td><%=admin2see%>

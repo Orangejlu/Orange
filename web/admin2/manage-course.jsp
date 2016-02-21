@@ -212,51 +212,53 @@
                     </div>
                     <div class="text-danger" id="tip0">&nbsp;</div>
                 </form>
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>编号</th>
-                        <th>课程</th>
-                        <th>学期</th>
-                        <th>学分</th>
-                        <th>类型</th>
-                        <th>教师</th>
-                        <th title="可选择该课程的院系和年级">院系年级</th>
-                        <th>时间地点</th>
-                        <th>删除</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <%
-                        try {
-                            PreparedStatement pstmt = con.prepareStatement(
-                                    "SELECT sec_id,c_title,sec_semester,sec_creadits,sec_type,t_name," +
-                                            "sec_depts,s_grade,r_name,ts_sweek,ts_eweek,ts_day,ts_sclass," +
-                                            "ts_eclass FROM sec  natural join course  natural join teacher" +
-                                            " natural join classroom  natural join timeslot WHERE d_name = ?");
-                            pstmt.setString(1, (String) session.getAttribute("dept"));
-                            ResultSet rs = pstmt.executeQuery();
-                            while (rs.next()) {
-                                out.println("<tr><td>" + rs.getString("sec_id") + "</td><td>"
-                                        + rs.getString("c_title") + "</td><td>" + rs.getString("sec_semester")
-                                        + "</td><td>" + rs.getString("sec_creadits") + "</td><td>"
-                                        + rs.getString("sec_type") + "</td><td>" + rs.getString("t_name")
-                                        + "</td><td>" + rs.getString("sec_depts") + rs.getString("s_grade")
-                                        + "</td><td>" + rs.getString("r_name") + "；第"
-                                        + rs.getString("ts_sweek") + "-" + rs.getString("ts_eweek") + "，星期"
-                                        + rs.getString("ts_day") + "，第" + rs.getString("ts_sclass") + "-"
-                                        + rs.getString("ts_eclass") + "节</td><td><a class='text-danger " +
-                                        "course-delete' href='admin2/addcourse.do?target=sec&id="
-                                        + rs.getString("sec_id") + "'>删除</a></td></tr>");
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>课程</th>
+                            <th>学期</th>
+                            <th>学分</th>
+                            <th>类型</th>
+                            <th>教师</th>
+                            <th title="可选择该课程的院系和年级">院系年级</th>
+                            <th>时间地点</th>
+                            <th>删除</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                            try {
+                                PreparedStatement pstmt = con.prepareStatement(
+                                        "SELECT sec_id,c_title,sec_semester,sec_creadits,sec_type,t_name," +
+                                                "sec_depts,s_grade,r_name,ts_sweek,ts_eweek,ts_day,ts_sclass," +
+                                                "ts_eclass FROM sec  natural join course  natural join teacher" +
+                                                " natural join classroom  natural join timeslot WHERE d_name = ? ORDER BY sec_id");
+                                pstmt.setString(1, (String) session.getAttribute("dept"));
+                                ResultSet rs = pstmt.executeQuery();
+                                while (rs.next()) {
+                                    out.println("<tr><td>" + rs.getString("sec_id") + "</td><td>"
+                                            + rs.getString("c_title") + "</td><td>" + rs.getString("sec_semester")
+                                            + "</td><td>" + rs.getString("sec_creadits") + "</td><td>"
+                                            + rs.getString("sec_type") + "</td><td>" + rs.getString("t_name")
+                                            + "</td><td>" + rs.getString("sec_depts") + rs.getString("s_grade")
+                                            + "</td><td>" + rs.getString("r_name") + "；第"
+                                            + rs.getString("ts_sweek") + "-" + rs.getString("ts_eweek") + "，星期"
+                                            + rs.getString("ts_day") + "，第" + rs.getString("ts_sclass") + "-"
+                                            + rs.getString("ts_eclass") + "节</td><td><a class='text-danger " +
+                                            "course-delete' href='admin2/addcourse.do?target=sec&id="
+                                            + rs.getString("sec_id") + "'>删除</a></td></tr>");
+                                }
+                                rs.close();
+                                pstmt.close();
+                            } catch (SQLException e) {
+                                out.println("\"\"查询数据库出错了\"\"");
                             }
-                            rs.close();
-                            pstmt.close();
-                        } catch (SQLException e) {
-                            out.println("\"\"查询数据库出错了\"\"");
-                        }
-                    %>
-                    </tbody>
-                </table>
+                        %>
+                        </tbody>
+                    </table>
+                </div>
             </div><!--.panel-body-->
         </div><!--.pabel-collapse-->
     </div><!--.panel-->
@@ -289,34 +291,36 @@
                     </div>
                     <div class="text-danger" id="tip">&nbsp;</div>
                 </form>
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>课程编号</th>
-                        <th>课程名称</th>
-                        <th>删除</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <%
-                        try {
-                            PreparedStatement pstmt = con.prepareStatement(
-                                    "SELECT c_id,c_title,d_name FROM course WHERE d_name = ?");
-                            pstmt.setString(1, (String) session.getAttribute("dept"));
-                            ResultSet rs = pstmt.executeQuery();
-                            while (rs.next()) {
-                                out.print("<tr><td>" + rs.getString("c_id")
-                                        + "</td><td>" + rs.getString("c_title") + "</td>"
-                                        + "<td><a class='text-danger course-delete' "
-                                        + "href='admin2/addcourse.do?target=course&id="
-                                        + rs.getString("c_id") + "'>删除</a></td></tr>");
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>课程编号</th>
+                            <th>课程名称</th>
+                            <th>删除</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                            try {
+                                PreparedStatement pstmt = con.prepareStatement(
+                                        "SELECT c_id,c_title,d_name FROM course WHERE d_name = ? ORDER BY c_id");
+                                pstmt.setString(1, (String) session.getAttribute("dept"));
+                                ResultSet rs = pstmt.executeQuery();
+                                while (rs.next()) {
+                                    out.print("<tr><td>" + rs.getString("c_id")
+                                            + "</td><td>" + rs.getString("c_title") + "</td>"
+                                            + "<td><a class='text-danger course-delete' "
+                                            + "href='admin2/addcourse.do?target=course&id="
+                                            + rs.getString("c_id") + "'>删除</a></td></tr>");
+                                }
+                            } catch (SQLException e) {
+                                out.println("<tr><td colspan='3' class='text-danger'>发生了异常(" + e.getMessage() + ")</td></tr>");
                             }
-                        } catch (SQLException e) {
-                            out.println("<tr><td colspan='3' class='text-danger'>发生了异常(" + e.getMessage() + ")</td></tr>");
-                        }
-                    %>
-                    </tbody>
-                </table>
+                        %>
+                        </tbody>
+                    </table>
+                </div>
             </div><!--.panel-body-->
         </div><!--.pabel-collapse-->
     </div><!--.panel-->
@@ -362,38 +366,40 @@
                     </div>
                     <div id="tip2" class="text-danger">&nbsp;</div>
                 </form>
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>教室编号</th>
-                        <th>教室名称</th>
-                        <th>教室容量</th>
-                        <th>所属楼宇</th>
-                        <th>删除</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <%
-                        try {
-                            PreparedStatement pstmt = con.prepareStatement(
-                                    "SELECT r_id,r_name,r_size,R_BUILDING  FROM classroom WHERE d_name = ?");
-                            pstmt.setString(1, (String) session.getAttribute("dept"));
-                            ResultSet rs = pstmt.executeQuery();
-                            while (rs.next()) {
-                                out.print("<tr><td>" + rs.getString("r_id")
-                                        + "</td><td>" + rs.getString("r_name")
-                                        + "</td><td>" + rs.getString("r_size")
-                                        + "</td><td>" + rs.getString("R_BUILDING")
-                                        + "</td><td><a class='text-danger course-delete' " +
-                                        "href='admin2/addcourse.do?target=room&id=" + rs.getString("r_id") + "'>删除</a></td></tr>");
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>教室编号</th>
+                            <th>教室名称</th>
+                            <th>教室容量</th>
+                            <th>所属楼宇</th>
+                            <th>删除</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                            try {
+                                PreparedStatement pstmt = con.prepareStatement(
+                                        "SELECT r_id,r_name,r_size,R_BUILDING  FROM classroom WHERE d_name = ? ORDER BY r_id");
+                                pstmt.setString(1, (String) session.getAttribute("dept"));
+                                ResultSet rs = pstmt.executeQuery();
+                                while (rs.next()) {
+                                    out.print("<tr><td>" + rs.getString("r_id")
+                                            + "</td><td>" + rs.getString("r_name")
+                                            + "</td><td>" + rs.getString("r_size")
+                                            + "</td><td>" + rs.getString("R_BUILDING")
+                                            + "</td><td><a class='text-danger course-delete' " +
+                                            "href='admin2/addcourse.do?target=room&id=" + rs.getString("r_id") + "'>删除</a></td></tr>");
+                                }
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                                out.println("<tr><td colspan='4' class='text-danger'>发生了异常(" + e.getMessage() + ")</td></tr>");
                             }
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                            out.println("<tr><td colspan='4' class='text-danger'>发生了异常(" + e.getMessage() + ")</td></tr>");
-                        }
-                    %>
-                    </tbody>
-                </table>
+                        %>
+                        </tbody>
+                    </table>
+                </div>
             </div><!--.panel-body-->
         </div><!--.pabel-collapse-->
     </div><!--.panel-->
@@ -476,36 +482,38 @@
                     </div>
                     <div id="tip3" class="text-danger">&nbsp;</div>
                 </form>
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>编号</th>
-                        <th>描述</th>
-                        <th>删除</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <%
-                        try {
-                            PreparedStatement pstmt = con.prepareStatement(
-                                    "SELECT ts_id,ts_sweek,ts_eweek,ts_day,ts_sclass,ts_eclass FROM timeslot WHERE d_name = ?");
-                            pstmt.setString(1, (String) session.getAttribute("dept"));
-                            ResultSet rs = pstmt.executeQuery();
-                            while (rs.next()) {
-                                out.print("<tr><td>" + rs.getString("ts_id")
-                                        + "</td><td>第" + rs.getString("ts_sweek") + " - " +
-                                        rs.getString("ts_eweek") + "周， " +
-                                        "星期" + rs.getString("ts_day") + "， " +
-                                        "第" + rs.getString("ts_sclass") + " - " +
-                                        rs.getString("ts_eclass") + "节</td><td><a class='text-danger course-delete'" +
-                                        " href='admin2/addcourse.do?target=ts&id=" + rs.getString("ts_id") + "'>删除</a></td></tr>");
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>描述</th>
+                            <th>删除</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                            try {
+                                PreparedStatement pstmt = con.prepareStatement(
+                                        "SELECT ts_id,ts_sweek,ts_eweek,ts_day,ts_sclass,ts_eclass FROM timeslot WHERE d_name = ? ORDER BY ts_id");
+                                pstmt.setString(1, (String) session.getAttribute("dept"));
+                                ResultSet rs = pstmt.executeQuery();
+                                while (rs.next()) {
+                                    out.print("<tr><td>" + rs.getString("ts_id")
+                                            + "</td><td>第" + rs.getString("ts_sweek") + " - " +
+                                            rs.getString("ts_eweek") + "周， " +
+                                            "星期" + rs.getString("ts_day") + "， " +
+                                            "第" + rs.getString("ts_sclass") + " - " +
+                                            rs.getString("ts_eclass") + "节</td><td><a class='text-danger course-delete'" +
+                                            " href='admin2/addcourse.do?target=ts&id=" + rs.getString("ts_id") + "'>删除</a></td></tr>");
+                                }
+                            } catch (SQLException e) {
+                                out.println("<tr><td colspan='2' class='text-danger'>发生了异常(" + e.getMessage() + ")</td></tr>");
                             }
-                        } catch (SQLException e) {
-                            out.println("<tr><td colspan='2' class='text-danger'>发生了异常(" + e.getMessage() + ")</td></tr>");
-                        }
-                    %>
-                    </tbody>
-                </table>
+                        %>
+                        </tbody>
+                    </table>
+                </div>
             </div><!--.panel-body-->
         </div><!--.pabel-collapse-->
     </div><!--.panel-->

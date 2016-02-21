@@ -53,8 +53,14 @@
     ul.nav li:hover {
         background-color: #ccc;
     }
-    .container{width: 100%;}
-    span.block{display: block;}
+
+    .container {
+        width: 100%;
+    }
+
+    span.block {
+        display: block;
+    }
 </style>
 </head>
 <body>
@@ -79,7 +85,11 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li id="home"><a href="<%=basePath%>user/">首页</a></li>
-                    <li><a href="<%=basePath%>user/?reason=logout">注销登录</a></li>
+                    <li id="select"><a href="<%=basePath%>user/select.jsp">选课</a></li>
+                    <li id="courselist"><a href="<%=basePath%>user/courselist.jsp">课表</a></li>
+                    <li id="score"><a href="<%=basePath%>user/score.jsp">成绩</a></li>
+                    <li id="passwd"><a href="<%=basePath%>user/passwd.jsp">密码</a></li>
+                    <li><a href="<%=basePath%>user/?reason=logout">注销</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->

@@ -70,7 +70,7 @@ public class LoginCheckServlet extends HttpServlet {
                         if (rs.getInt(2) == 1) {
                             session.setAttribute("logined", rs.getString(1));
                             session.setAttribute("type", 1);
-                            session.setAttribute("dept",rs.getString("d_name"));
+                            session.setAttribute("dept", rs.getString("d_name"));
                             System.out.println("教务登录成功");
                             //response.sendRedirect("admin2/");
                             out.println("{\"ok\":\"true\",\"msg\":\"admin2/\"}");
@@ -96,8 +96,9 @@ public class LoginCheckServlet extends HttpServlet {
                     rs = pstmt.executeQuery();
                     while (rs.next()) {
                         session.setAttribute("logined", rs.getString("s_name"));
+                        session.setAttribute("userId", rs.getString("s_id"));
                         session.setAttribute("type", 3);
-                        session.setAttribute("dept",rs.getString("d_name"));
+                        session.setAttribute("dept", rs.getString("d_name"));
                         System.out.println("学生登录");
                         //response.sendRedirect("user/");
                         out.println("{\"ok\":\"true\",\"msg\":\"user/\"}");
@@ -112,7 +113,7 @@ public class LoginCheckServlet extends HttpServlet {
                     while (rs.next()) {
                         session.setAttribute("logined", rs.getString("t_name"));
                         session.setAttribute("type", 2);
-                        session.setAttribute("dept",rs.getString("d_name"));
+                        session.setAttribute("dept", rs.getString("d_name"));
                         System.out.println("教师登录");
                         //response.sendRedirect("teacher/");
                         out.println("{\"ok\":\"true\",\"msg\":\"teacher/\"}");

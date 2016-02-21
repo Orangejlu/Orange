@@ -10,7 +10,9 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ page pageEncoding="UTF-8" language="java" %>
 <%@ include file="../WEB-INF/content/user/top.jsp" %>
-
+<script>function addmyclass() {
+    $('#home').addClass('active');
+}</script>
 <div class="table-responsive">
     <h4>系统公告</h4>
     <table class="table table-striped table-hover">
