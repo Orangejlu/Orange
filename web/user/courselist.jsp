@@ -14,20 +14,24 @@
 <%@ include file="../WEB-INF/content/user/top.jsp" %>
 <script>function addmyclass() {
     $('#courselist').addClass('active');
+    $(window).resize(function() {
+        $('.th').width(($('tr').width()-$('.th1').width())/7);
+    });
+    $(window).resize();
 }</script>
 
 <div class="table-responsive">
     <table class="table table-striped table-hover">
         <thead>
         <tr>
-            <th>&nbsp;</th>
-            <th>周一</th>
-            <th>周二</th>
-            <th>周三</th>
-            <th>周四</th>
-            <th>周五</th>
-            <th>周六</th>
-            <th>周日</th>
+            <th class="th1">&nbsp;</th>
+            <th class="th">周一</th>
+            <th class="th">周二</th>
+            <th class="th">周三</th>
+            <th class="th">周四</th>
+            <th class="th">周五</th>
+            <th class="th">周六</th>
+            <th class="th">周日</th>
         </tr>
         </thead>
         <tbody>
@@ -52,8 +56,10 @@
                     for (int i = Integer.parseInt(rs.getString("ts_sclass")) - 1;
                          i < Integer.parseInt(rs.getString("ts_eclass")); i++) {
                         lists[i][Integer.parseInt(rs.getString("ts_day")) - 1] +=
-                                "[" + rs.getString("c_title") + "<br>" + rs.getString("t_name")
-                                        + "<br>" + rs.getString("r_name") + "]";
+                                rs.getString("c_title") + "；" + rs.getString("ts_sclass") + "-"
+                                        + rs.getString("ts_eclass") + "节(" + rs.getString("ts_sweek") + "-"
+                                        + rs.getString("ts_eweek") + "周)；" + rs.getString("t_name")
+                                        + "；" + rs.getString("r_name");
                     }
                 }
             } catch (SQLException e) {
