@@ -350,10 +350,10 @@ jQuery(document).ready(function ($) {
                 }
             },
             error: function () {
-                msg += "出错了<div>";
+                msg += "出错了</div>";
             },
             complete: function () {
-                $('#alert-tip').append(msg).css('top', $(document.body).height() / 2);
+                $('#alert-tip').append(msg).css('top', ($(document.body).height() - $('#alert-tip').height()) / 2);
             }
         });
         return e.preventDefault();

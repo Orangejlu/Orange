@@ -112,6 +112,7 @@ public class LoginCheckServlet extends HttpServlet {
                     rs = pstmt.executeQuery();
                     while (rs.next()) {
                         session.setAttribute("logined", rs.getString("t_name"));
+                        session.setAttribute("userId", rs.getString("t_id"));
                         session.setAttribute("type", 2);
                         session.setAttribute("dept", rs.getString("d_name"));
                         System.out.println("教师登录");

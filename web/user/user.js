@@ -85,7 +85,7 @@ jQuery(document).ready(function ($) {
                 } else msg += r.msg + '</div>';
             },
             error: function () {
-                msg += "出错了<div>";
+                msg += "出错了</div>";
             },
             complete: function () {
                 $('#alert-tip').append(msg).css('top', ($(document.body).height() - $('#alert-tip').height()) / 2);

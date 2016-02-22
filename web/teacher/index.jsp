@@ -10,6 +10,9 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ page pageEncoding="UTF-8" language="java" %>
 <%@ include file="../WEB-INF/content/teacher/top.jsp" %>
+<script>function addmyclass() {
+    $('#home').addClass('active');
+}</script>
 <div class="table-responsive">
     <h4>系统公告</h4>
     <table class="table table-striped table-hover">
@@ -63,8 +66,10 @@
                 <h3 id="notice-title">公告详情</h3></div>
             <div class="modal-body">
                 <header>
-                    发布时间： <date id="notice-pubtime"></date>
-                </header><br>
+                    发布时间：
+                    <date id="notice-pubtime"></date>
+                </header>
+                <br>
                 <a href="<%=basePath%>" id="notice-remote-uri" class="hide"></a>
                 <div id="notice-content">正在加载公告详情...</div>
             </div><!--.modal-body-->
@@ -75,5 +80,5 @@
     </div><!--/.modal-dialog-->
 </div>
 <!--/.modal-->
-<%@ include file="../WEB-INF/content/teacher/bottom.jsp"%>
+<%@ include file="../WEB-INF/content/teacher/bottom.jsp" %>
 
