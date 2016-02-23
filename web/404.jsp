@@ -21,7 +21,7 @@
     <base href="<c:url value="/"/>">
     <!--link rel="stylesheet" href="css/style.css" /-->
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <script src="js/jquery-2.1.4.min.js"></script>
+    <%--<script src="js/jquery-2.1.4.min.js"></script>--%>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

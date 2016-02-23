@@ -37,7 +37,7 @@
     <link rel="icon" href="<%=basePath%>favicon.ico">
     <!--link rel="stylesheet" href="css/style.css" /-->
     <link rel="stylesheet" href="<%=basePath%>css/bootstrap.min.css">
-    <script src="<%=basePath%>js/jquery-2.1.4.min.js"></script>
+    <%--<script src="<%=basePath%>js/jquery-2.1.4.min.js"></script>--%>
     <!--[if lt IE 9]>
     <i style="display: block;text-align: center;background-color: #fff;">您的浏览器版本太低！请使用使用
         <span>IE 9+</span>、

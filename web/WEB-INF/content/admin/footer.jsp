@@ -18,9 +18,9 @@
         margin-bottom: 0;
     }</style>
 
-<script src="js/jquery-2.1.4.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="admin/admin.js"></script>
+<script src="<%=basePath%>js/jquery-2.1.4.min.js"></script>
+<script src="<%=basePath%>js/bootstrap.min.js"></script>
+<script src="<%=basePath%>admin/admin.js"></script>
 </body>
 
 </html>
