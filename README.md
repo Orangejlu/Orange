@@ -8,6 +8,9 @@ using Oracle
 教师用户可以查看课表，查看学生名单，上成绩；   
 学生用户可以选课，查课表，查成绩。  
 
+### 数据库文件
+<code>导出.sql</code> 
+
 ###截图
 登录界面
 ![登录](https://github.com/Orangejlu/Orange/raw/master/screenshots/001FireShot%20Capture%204%20-%20%E7%99%BB%E5%BD%95%20-%20http___local.dev_8080_login.jsp_reason%3Dlogin.png)
